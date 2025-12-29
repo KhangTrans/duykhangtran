@@ -96,7 +96,7 @@ const Contact = () => {
   const USER_ID = "YWHwHqaw639SV4vQA";
 
   // reCAPTCHA Site Key - v2 with 'I'm not a robot' Checkbox
-  const RECAPTCHA_SITE_KEY = "6LceWjosAAAAAI52IZfnZ7wtXSTReAaw77hwe9AE";
+  const RECAPTCHA_SITE_KEY = "6LceWjosAAAAAJhyqJ2Yp8YPuxZeOatpdCizq54o";
 
   const handleRecaptchaChange = (value) => {
     setRecaptchaValue(value);
