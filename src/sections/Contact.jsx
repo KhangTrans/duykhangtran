@@ -95,8 +95,8 @@ const Contact = () => {
   const TEMPLATE_ID = "template_dwct03j";
   const USER_ID = "YWHwHqaw639SV4vQA";
 
-  // reCAPTCHA Site Key - Production key for duykhangtran.vercel.app
-  const RECAPTCHA_SITE_KEY = "6LdlUzosAAAAAJ2KKlt2KtfiKWSWk3qpG8mKw0MB";
+  // reCAPTCHA Site Key - v2 with 'I'm not a robot' Checkbox
+  const RECAPTCHA_SITE_KEY = "6LceWjosAAAAAI52IZfnZ7wtXSTReAaw77hwe9AE";
 
   const handleRecaptchaChange = (value) => {
     setRecaptchaValue(value);
