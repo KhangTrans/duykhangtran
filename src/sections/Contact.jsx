@@ -160,8 +160,8 @@ const Contact = () => {
     {
       icon: <MailOutlined />,
       title: "Email",
-      value: "khangtd@example.com",
-      link: "mailto:khangtd@example.com",
+      value: "trank7866@gmail.com",
+      link: "mailto:trank7866@gmail.com",
     },
     {
       icon: <UserOutlined />,

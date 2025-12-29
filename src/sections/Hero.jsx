@@ -2,6 +2,7 @@ import { Button, Space, Row, Col } from "antd";
 import { DownOutlined, MailOutlined, GithubOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import styled from "styled-components";
+import profileImage from "../assets/khang.jpg";
 
 const HeroContainer = styled.div`
   min-height: 100vh;
@@ -203,8 +204,8 @@ const Hero = () => {
               transition={{ duration: 0.8 }}
             >
               <ProfileImage
-                src="/profile.png"
-                alt="Trần Duy Khang"
+                src={profileImage}
+                alt="Trần Dũy Khang"
                 onError={(e) => {
                   // Fallback to a gradient background if image doesn't load
                   e.target.style.background =
@@ -231,7 +232,7 @@ const Hero = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                Trần Duy Khang
+                Trần Dũy Khang
               </Name>
 
               <Title
