@@ -142,6 +142,7 @@ const Skills = () => {
     { name: "Java", text: "J", color: "#007396", level: 80 },
     { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E", level: 85 },
     { name: "ReactJS", icon: SiReact, color: "#61DAFB", level: 85 },
+    { name: "React Native", icon: SiReact, color: "#61DAFB", level: 80 },
     { name: "NodeJS", icon: SiNodedotjs, color: "#339933", level: 80 },
     { name: "ExpressJS", icon: SiExpress, color: "#000000", level: 75 },
     { name: "HTML5", icon: SiHtml5, color: "#E34F26", level: 90 },

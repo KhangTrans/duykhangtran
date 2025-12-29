@@ -27,6 +27,9 @@ const SectionTitle = styled(Title)`
 
 const ProjectCard = styled(Card)`
   height: 100%;
+  min-height: 650px;
+  display: flex;
+  flex-direction: column;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   border-radius: 12px;
   overflow: hidden;
@@ -55,6 +58,13 @@ const ProjectCard = styled(Card)`
 
   .ant-card-body {
     padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  @media (max-width: 992px) {
+    min-height: auto;
   }
 `;
 
@@ -127,6 +137,7 @@ const Projects = () => {
     {
       type: "University Project",
       title: "Gym Management System",
+      role: "Team Leader",
       description:
         "A comprehensive management system designed for gym facilities, streamlining operations and improving member experience.",
       features: [
@@ -137,25 +148,32 @@ const Projects = () => {
         "Payment processing and reporting",
       ],
       techStack: ["Java", "MySQL", "HTML/CSS", "JavaScript"],
-      github: "https://github.com/yourusername/gym-management",
+      github: "https://github.com/KhangTrans/Se1816-project-SWP301",
+      gitlab: null,
       demo: null,
       gradient: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     },
     {
       type: "Real-world Project",
       title: "National Bus Ticket Booking Platform",
+      role: "Frontend Team Leader",
       description:
-        "A scalable online platform connecting multiple bus operators across Vietnam, providing seamless ticket booking experience.",
+        "A scalable online platform connecting multiple bus operators across Vietnam, providing seamless ticket booking experience with full Vietnamese language support.",
       features: [
         "Multi-operator bus route integration",
-        "Real-time seat availability",
+        "Real-time seat availability tracking",
         "Online booking and ticket management",
-        "English language support",
+        "Vietnamese & English language support",
         "User-friendly responsive interface",
         "Payment gateway integration",
       ],
       techStack: ["ReactJS", "NodeJS", "ExpressJS", "MySQL", "Ant Design"],
-      github: "https://github.com/yourusername/bus-booking",
+      github: null,
+      gitlab: {
+        client:
+          "https://git.rikkei.edu.vn/ojt-fu-cantho/b2/group03/client-react",
+        api: "https://git.rikkei.edu.vn/ojt-fu-cantho/b2/group03/api",
+      },
       demo: null,
       gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     },
@@ -179,11 +197,33 @@ const Projects = () => {
                   <ProjectType>{project.type}</ProjectType>
                   <ProjectTitle>{project.title}</ProjectTitle>
 
-                  <Paragraph style={{ fontSize: "1rem", lineHeight: "1.6" }}>
+                  {project.role && (
+                    <Tag
+                      color="purple"
+                      style={{
+                        fontSize: "0.9rem",
+                        padding: "4px 12px",
+                        marginBottom: "15px",
+                        borderRadius: "6px",
+                      }}
+                    >
+                      👨‍💼 {project.role}
+                    </Tag>
+                  )}
+
+                  <Paragraph
+                    style={{
+                      fontSize: "1rem",
+                      lineHeight: "1.6",
+                      marginTop: "10px",
+                    }}
+                  >
                     {project.description}
                   </Paragraph>
 
-                  <Title level={5}>Key Features:</Title>
+                  <Title level={5} style={{ marginTop: "20px" }}>
+                    Key Features:
+                  </Title>
                   <FeatureList>
                     {project.features.map((feature, idx) => (
                       <li key={idx}>{feature}</li>
@@ -207,15 +247,39 @@ const Projects = () => {
                     ))}
                   </TagsContainer>
 
-                  <Space style={{ marginTop: "20px" }}>
-                    <Button
-                      type="primary"
-                      icon={<GithubOutlined />}
-                      href={project.github}
-                      target="_blank"
-                    >
-                      View Code
-                    </Button>
+                  <Space style={{ marginTop: "20px" }} wrap>
+                    {project.github && (
+                      <Button
+                        type="primary"
+                        icon={<GithubOutlined />}
+                        href={project.github}
+                        target="_blank"
+                      >
+                        View Code
+                      </Button>
+                    )}
+                    {project.gitlab && (
+                      <>
+                        <Button
+                          type="primary"
+                          icon={<GithubOutlined />}
+                          href={project.gitlab.client}
+                          target="_blank"
+                          style={{ background: "#FC6D26" }}
+                        >
+                          GitLab (Client)
+                        </Button>
+                        <Button
+                          type="primary"
+                          icon={<GithubOutlined />}
+                          href={project.gitlab.api}
+                          target="_blank"
+                          style={{ background: "#FC6D26" }}
+                        >
+                          GitLab (API)
+                        </Button>
+                      </>
+                    )}
                     {project.demo && (
                       <Button
                         icon={<LinkOutlined />}
