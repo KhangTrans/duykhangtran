@@ -11,8 +11,10 @@ const HeroContainer = styled.div`
   justify-content: center;
   align-items: center;
   padding: 20px;
+  padding-bottom: 80px;
   position: relative;
   overflow: hidden;
+  width: 100%;
 
   /* Animated Background Elements */
   &::before {
@@ -70,6 +72,8 @@ const ProfileImageContainer = styled(motion.div)`
   justify-content: center;
   align-items: center;
   margin-bottom: 30px;
+  position: relative;
+  padding: 30px 0;
 
   @media (min-width: 768px) {
     margin-bottom: 0;
@@ -85,10 +89,25 @@ const ProfileImage = styled.img`
   background: linear-gradient(white, white) padding-box,
     linear-gradient(135deg, #1890ff, #722ed1) border-box;
   box-shadow: 0 20px 60px rgba(24, 144, 255, 0.3);
-  transition: transform 0.3s ease;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: gentle-float 4s ease-in-out infinite;
+  position: relative;
+
+  @keyframes gentle-float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-15px);
+    }
+  }
 
   &:hover {
-    transform: scale(1.05);
+    transform: translateY(-20px) scale(1.05);
+    box-shadow: 0 30px 80px rgba(24, 144, 255, 0.5),
+      0 0 50px rgba(114, 46, 209, 0.3);
+    filter: brightness(1.1);
   }
 
   @media (max-width: 768px) {
@@ -158,15 +177,17 @@ const Description = styled(motion.p)`
 const ScrollIndicator = styled(motion.div)`
   position: absolute;
   bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   opacity: 0.6;
   transition: opacity 0.3s;
+  z-index: 10;
 
   &:hover {
     opacity: 1;
@@ -174,6 +195,63 @@ const ScrollIndicator = styled(motion.div)`
 
   span {
     font-size: 0.9rem;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 768px) {
+    bottom: 20px;
+
+    span {
+      font-size: 0.85rem;
+    }
+
+    svg {
+      font-size: 1.2rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    bottom: 15px;
+
+    span {
+      font-size: 0.8rem;
+    }
+  }
+`;
+
+const ButtonContainer = styled(motion.div)`
+  margin-bottom: 60px;
+
+  @media (max-width: 768px) {
+    margin-bottom: 50px;
+    width: 100%;
+
+    .ant-space {
+      width: 100%;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      gap: 16px !important;
+    }
+
+    .ant-btn {
+      height: 48px !important;
+      font-size: 1rem !important;
+      padding: 0 24px !important;
+      width: 100% !important;
+      max-width: 280px !important;
+    }
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 40px;
+
+    .ant-btn {
+      height: 45px !important;
+      font-size: 0.95rem !important;
+      max-width: 260px !important;
+    }
   }
 `;
 
@@ -205,7 +283,7 @@ const Hero = () => {
             >
               <ProfileImage
                 src={profileImage}
-                alt="Trần Dũy Khang"
+                alt="TRAN DUY KHANG"
                 onError={(e) => {
                   // Fallback to a gradient background if image doesn't load
                   e.target.style.background =
@@ -232,7 +310,7 @@ const Hero = () => {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.8, delay: 0.2 }}
               >
-                Trần Dũy Khang
+                TRAN DUY KHANG
               </Name>
 
               <Title
@@ -254,12 +332,12 @@ const Hero = () => {
                 cutting-edge technologies.
               </Description>
 
-              <motion.div
+              <ButtonContainer
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, delay: 0.8 }}
               >
-                <Space size="large" wrap>
+                <Space size="large" wrap style={{ justifyContent: "center" }}>
                   <Button
                     type="primary"
                     size="large"
@@ -286,7 +364,7 @@ const Hero = () => {
                     Contact Me
                   </Button>
                 </Space>
-              </motion.div>
+              </ButtonContainer>
             </TextContent>
           </Col>
         </Row>

@@ -1,4 +1,4 @@
-import { Card, Row, Col, Typography, Progress } from "antd";
+import { Card, Row, Col, Typography } from "antd";
 import { CodeOutlined } from "@ant-design/icons";
 import { motion } from "framer-motion";
 import styled from "styled-components";
@@ -94,17 +94,6 @@ const CategoryTitle = styled(Title)`
   }
 `;
 
-const ProgressCard = styled(Card)`
-  transition: all 0.3s ease;
-  border-radius: 12px;
-  margin-bottom: 16px;
-
-  &:hover {
-    box-shadow: 0 8px 16px rgba(24, 144, 255, 0.2);
-    transform: translateX(10px);
-  }
-`;
-
 // Custom text-based icon component
 const TextIcon = styled.div`
   font-size: 2.5rem;
@@ -138,16 +127,16 @@ const Skills = () => {
   };
 
   const programmingSkills = [
-    { name: "C", text: "C", color: "#A8B9CC", level: 75 },
-    { name: "Java", text: "J", color: "#007396", level: 80 },
-    { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E", level: 85 },
-    { name: "ReactJS", icon: SiReact, color: "#61DAFB", level: 85 },
-    { name: "React Native", icon: SiReact, color: "#61DAFB", level: 80 },
-    { name: "NodeJS", icon: SiNodedotjs, color: "#339933", level: 80 },
-    { name: "ExpressJS", icon: SiExpress, color: "#000000", level: 75 },
-    { name: "HTML5", icon: SiHtml5, color: "#E34F26", level: 90 },
-    { name: "CSS3", icon: SiCss3, color: "#1572B6", level: 85 },
-    { name: "MySQL", icon: SiMysql, color: "#4479A1", level: 75 },
+    { name: "C", text: "C", color: "#A8B9CC" },
+    { name: "Java", text: "J", color: "#007396" },
+    { name: "JavaScript", icon: SiJavascript, color: "#F7DF1E" },
+    { name: "ReactJS", icon: SiReact, color: "#61DAFB" },
+    { name: "React Native", icon: SiReact, color: "#61DAFB" },
+    { name: "NodeJS", icon: SiNodedotjs, color: "#339933" },
+    { name: "ExpressJS", icon: SiExpress, color: "#000000" },
+    { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
+    { name: "CSS3", icon: SiCss3, color: "#1572B6" },
+    { name: "MySQL", icon: SiMysql, color: "#4479A1" },
   ];
 
   const versionControlSkills = [
@@ -170,53 +159,22 @@ const Skills = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={containerVariants}
       >
-        <Row gutter={[16, 16]}>
+        <Row gutter={[24, 24]}>
           {programmingSkills.map((skill, index) => (
-            <Col xs={24} sm={12} key={index}>
+            <Col xs={24} sm={12} md={8} lg={6} key={index}>
               <motion.div variants={itemVariants}>
-                <ProgressCard>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "15px",
-                    }}
-                  >
-                    {skill.icon ? (
-                      <skill.icon
-                        style={{
-                          fontSize: "2.5rem",
-                          color: skill.color,
-                          flexShrink: 0,
-                        }}
-                      />
-                    ) : (
+                <SkillCard>
+                  {skill.icon ? (
+                    <IconWrapper color={skill.color}>
+                      <skill.icon />
+                    </IconWrapper>
+                  ) : (
+                    <IconWrapper color={skill.color}>
                       <TextIcon color={skill.color}>{skill.text}</TextIcon>
-                    )}
-                    <div style={{ flex: 1 }}>
-                      <div
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                          marginBottom: "8px",
-                        }}
-                      >
-                        <SkillName>{skill.name}</SkillName>
-                        <span style={{ fontWeight: "bold" }}>
-                          {skill.level}%
-                        </span>
-                      </div>
-                      <Progress
-                        percent={skill.level}
-                        strokeColor={{
-                          "0%": "#1890ff",
-                          "100%": "#722ed1",
-                        }}
-                        showInfo={false}
-                      />
-                    </div>
-                  </div>
-                </ProgressCard>
+                    </IconWrapper>
+                  )}
+                  <SkillName>{skill.name}</SkillName>
+                </SkillCard>
               </motion.div>
             </Col>
           ))}

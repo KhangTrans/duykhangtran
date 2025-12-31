@@ -116,7 +116,7 @@ const Contact = () => {
         from_name: values.name,
         from_email: values.email,
         message: values.message,
-        to_name: "Trần Duy Khang",
+        to_name: "TRAN DUY KHANG",
       };
 
       await emailjs.send(SERVICE_ID, TEMPLATE_ID, templateParams, USER_ID);

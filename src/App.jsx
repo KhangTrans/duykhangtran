@@ -7,6 +7,12 @@ import Skills from "./sections/Skills";
 import Projects from "./sections/Projects";
 import Contact from "./sections/Contact";
 import Footer from "./sections/Footer";
+import TetFlowers from "./components/TetFlowers";
+import Fireworks from "./components/Fireworks";
+import Welcome2026 from "./components/Welcome2026";
+import ConfettiEffect from "./components/ConfettiEffect";
+import CursorTrail from "./components/CursorTrail";
+import ClickFireworks from "./components/ClickFireworks";
 import "./styles/App.css";
 
 function App() {
@@ -29,6 +35,18 @@ function App() {
     >
       <AntApp>
         <div className={`app ${isDarkMode ? "dark-mode" : "light-mode"}`}>
+          {/* New Year Greeting */}
+          <Welcome2026 />
+
+          {/* Festive Effects */}
+          <ConfettiEffect />
+          <TetFlowers />
+          <Fireworks />
+
+          {/* Interactive Effects */}
+          <CursorTrail />
+          <ClickFireworks />
+
           {/* Main Content */}
           <Hero />
           <About />

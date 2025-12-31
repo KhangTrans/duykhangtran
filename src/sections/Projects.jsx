@@ -27,7 +27,6 @@ const SectionTitle = styled(Title)`
 
 const ProjectCard = styled(Card)`
   height: 100%;
-  min-height: 650px;
   display: flex;
   flex-direction: column;
   transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -60,11 +59,7 @@ const ProjectCard = styled(Card)`
     padding: 24px;
     display: flex;
     flex-direction: column;
-    flex: 1;
-  }
-
-  @media (max-width: 992px) {
-    min-height: auto;
+    height: 100%;
   }
 `;
 
@@ -115,6 +110,21 @@ const TagsContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+`;
+
+const ContentWrapper = styled.div`
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ButtonWrapper = styled.div`
+  margin-top: auto;
+  padding-top: 20px;
+`;
+
+const MotionWrapper = styled(motion.div)`
+  height: 100%;
 `;
 
 const Projects = () => {
@@ -189,109 +199,113 @@ const Projects = () => {
         viewport={{ once: true, amount: 0.2 }}
         variants={containerVariants}
       >
-        <Row gutter={[24, 24]}>
+        <Row gutter={[24, 24]} style={{ alignItems: "stretch" }}>
           {projects.map((project, index) => (
-            <Col xs={24} lg={12} key={index}>
-              <motion.div variants={itemVariants}>
+            <Col xs={24} lg={12} key={index} style={{ display: "flex" }}>
+              <MotionWrapper variants={itemVariants}>
                 <ProjectCard>
-                  <ProjectType>{project.type}</ProjectType>
-                  <ProjectTitle>{project.title}</ProjectTitle>
+                  <ContentWrapper>
+                    <ProjectType>{project.type}</ProjectType>
+                    <ProjectTitle>{project.title}</ProjectTitle>
 
-                  {project.role && (
-                    <Tag
-                      color="purple"
-                      style={{
-                        fontSize: "0.9rem",
-                        padding: "4px 12px",
-                        marginBottom: "15px",
-                        borderRadius: "6px",
-                      }}
-                    >
-                      👨‍💼 {project.role}
-                    </Tag>
-                  )}
-
-                  <Paragraph
-                    style={{
-                      fontSize: "1rem",
-                      lineHeight: "1.6",
-                      marginTop: "10px",
-                    }}
-                  >
-                    {project.description}
-                  </Paragraph>
-
-                  <Title level={5} style={{ marginTop: "20px" }}>
-                    Key Features:
-                  </Title>
-                  <FeatureList>
-                    {project.features.map((feature, idx) => (
-                      <li key={idx}>{feature}</li>
-                    ))}
-                  </FeatureList>
-
-                  <Title level={5}>Tech Stack:</Title>
-                  <TagsContainer>
-                    {project.techStack.map((tech, idx) => (
+                    {project.role && (
                       <Tag
-                        key={idx}
-                        color="blue"
+                        color="purple"
                         style={{
                           fontSize: "0.9rem",
-                          padding: "5px 12px",
+                          padding: "4px 12px",
+                          marginBottom: "15px",
                           borderRadius: "6px",
                         }}
                       >
-                        {tech}
+                        👨‍💼 {project.role}
                       </Tag>
-                    ))}
-                  </TagsContainer>
+                    )}
 
-                  <Space style={{ marginTop: "20px" }} wrap>
-                    {project.github && (
-                      <Button
-                        type="primary"
-                        icon={<GithubOutlined />}
-                        href={project.github}
-                        target="_blank"
-                      >
-                        View Code
-                      </Button>
-                    )}
-                    {project.gitlab && (
-                      <>
+                    <Paragraph
+                      style={{
+                        fontSize: "1rem",
+                        lineHeight: "1.6",
+                        marginTop: "10px",
+                      }}
+                    >
+                      {project.description}
+                    </Paragraph>
+
+                    <Title level={5} style={{ marginTop: "20px" }}>
+                      Key Features:
+                    </Title>
+                    <FeatureList>
+                      {project.features.map((feature, idx) => (
+                        <li key={idx}>{feature}</li>
+                      ))}
+                    </FeatureList>
+
+                    <Title level={5}>Tech Stack:</Title>
+                    <TagsContainer>
+                      {project.techStack.map((tech, idx) => (
+                        <Tag
+                          key={idx}
+                          color="blue"
+                          style={{
+                            fontSize: "0.9rem",
+                            padding: "5px 12px",
+                            borderRadius: "6px",
+                          }}
+                        >
+                          {tech}
+                        </Tag>
+                      ))}
+                    </TagsContainer>
+                  </ContentWrapper>
+
+                  <ButtonWrapper>
+                    <Space wrap>
+                      {project.github && (
                         <Button
                           type="primary"
                           icon={<GithubOutlined />}
-                          href={project.gitlab.client}
+                          href={project.github}
                           target="_blank"
-                          style={{ background: "#FC6D26" }}
                         >
-                          GitLab (Client)
+                          View Code
                         </Button>
+                      )}
+                      {project.gitlab && (
+                        <>
+                          <Button
+                            type="primary"
+                            icon={<GithubOutlined />}
+                            href={project.gitlab.client}
+                            target="_blank"
+                            style={{ background: "#FC6D26" }}
+                          >
+                            GitLab (Client)
+                          </Button>
+                          <Button
+                            type="primary"
+                            icon={<GithubOutlined />}
+                            href={project.gitlab.api}
+                            target="_blank"
+                            style={{ background: "#FC6D26" }}
+                          >
+                            GitLab (API)
+                          </Button>
+                        </>
+                      )}
+                      {project.demo && (
                         <Button
-                          type="primary"
-                          icon={<GithubOutlined />}
-                          href={project.gitlab.api}
+                          icon={<LinkOutlined />}
+                          href={project.demo}
                           target="_blank"
-                          style={{ background: "#FC6D26" }}
                         >
-                          GitLab (API)
+                          Live Demo
                         </Button>
-                      </>
-                    )}
-                    {project.demo && (
-                      <Button
-                        icon={<LinkOutlined />}
-                        href={project.demo}
-                        target="_blank"
-                      >
-                        Live Demo
-                      </Button>
-                    )}
-                  </Space>
+                      )}
+                    </Space>
+                  </ButtonWrapper>
                 </ProjectCard>
-              </motion.div>
+              </MotionWrapper>
             </Col>
           ))}
         </Row>

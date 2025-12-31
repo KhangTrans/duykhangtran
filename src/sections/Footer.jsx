@@ -147,7 +147,7 @@ const Footer = () => {
           <Text>
             Made with{" "}
             <HeartFilled style={{ color: "#ff4d4f", margin: "0 5px" }} /> by{" "}
-            <strong>Trần Duy Khang</strong>
+            <strong>TRAN DUY KHANG</strong>
           </Text>
           <br />
           <Text style={{ fontSize: "0.9rem" }}>

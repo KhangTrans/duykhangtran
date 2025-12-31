@@ -81,7 +81,7 @@ const About = () => {
             <motion.div variants={itemVariants}>
               <StyledCard>
                 <Paragraph style={{ fontSize: "1.1rem", lineHeight: "1.8" }}>
-                  Hello! I'm <strong>Trần Duy Khang</strong>, a passionate
+                  Hello! I'm <strong>TRAN DUY KHANG</strong>, a passionate
                   Software Engineering student at{" "}
                   <strong>FPT University, Cần Thơ Campus</strong>. I specialize
                   in building modern, responsive web applications using
