@@ -83,17 +83,12 @@ const Footer = () => {
   const socialLinks = [
     {
       icon: <GithubOutlined />,
-      url: "https://github.com/yourusername",
+      url: "https://github.com/KhangTrans",
       label: "GitHub",
     },
     {
-      icon: <LinkedinOutlined />,
-      url: "https://linkedin.com/in/yourusername",
-      label: "LinkedIn",
-    },
-    {
       icon: <MailOutlined />,
-      url: "mailto:khangtd@example.com",
+      url: "mailto:trank7866@gmail.com",
       label: "Email",
     },
   ];
@@ -145,9 +140,7 @@ const Footer = () => {
         {/* Copyright */}
         <Copyright>
           <Text>
-            Made with{" "}
-            <HeartFilled style={{ color: "#ff4d4f", margin: "0 5px" }} /> by{" "}
-            <strong>TRAN DUY KHANG</strong>
+            Made by <strong>TRAN DUY KHANG</strong>
           </Text>
           <br />
           <Text style={{ fontSize: "0.9rem" }}>

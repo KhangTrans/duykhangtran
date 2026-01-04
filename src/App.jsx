@@ -36,16 +36,15 @@ function App() {
       <AntApp>
         <div className={`app ${isDarkMode ? "dark-mode" : "light-mode"}`}>
           {/* New Year Greeting */}
-          <Welcome2026 />
 
           {/* Festive Effects */}
-          <ConfettiEffect />
+          {/* <ConfettiEffect />
           <TetFlowers />
-          <Fireworks />
+          <Fireworks /> */}
 
           {/* Interactive Effects */}
-          <CursorTrail />
-          <ClickFireworks />
+          {/* <CursorTrail />
+          <ClickFireworks /> */}
 
           {/* Main Content */}
           <Hero />
