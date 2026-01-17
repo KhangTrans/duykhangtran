@@ -9,6 +9,7 @@ import {
   SiHtml5,
   SiCss3,
   SiMysql,
+  SiMongodb,
   SiGit,
   SiGithub,
   SiGitlab,
@@ -137,6 +138,7 @@ const Skills = () => {
     { name: "HTML5", icon: SiHtml5, color: "#E34F26" },
     { name: "CSS3", icon: SiCss3, color: "#1572B6" },
     { name: "MySQL", icon: SiMysql, color: "#4479A1" },
+    { name: "MongoDB", icon: SiMongodb, color: "#47A248" },
   ];
 
   const versionControlSkills = [

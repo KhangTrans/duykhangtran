@@ -187,6 +187,29 @@ const Projects = () => {
       demo: null,
       gradient: "linear-gradient(135deg, #f093fb 0%, #f5576c 100%)",
     },
+    {
+      type: "University Project",
+      title: "Tech E-commerce Website",
+      role: "Fullstack Developer",
+      description:
+        "A modern e-commerce platform for selling technology products with full-featured shopping experience, secure payment integration, and responsive design.",
+      features: [
+        "Product catalog with search & filters",
+        "Shopping cart & checkout system",
+        "VNPay & ZaloPay payment integration",
+        "User authentication & authorization",
+        "Admin dashboard for management",
+        "Responsive design for all devices",
+      ],
+      techStack: ["ReactJS", "NodeJS", "ExpressJS", "MongoDB", "Ant Design"],
+      github: {
+        frontend: "https://github.com/KhangTrans/frontend-ky7.git",
+        backend: "https://github.com/KhangTrans/backend-node.git",
+      },
+      gitlab: null,
+      demo: "https://khangtrandev.id.vn",
+      gradient: "linear-gradient(135deg, #11998e 0%, #38ef7d 100%)",
+    },
   ];
 
   return (
@@ -261,7 +284,7 @@ const Projects = () => {
 
                   <ButtonWrapper>
                     <Space wrap>
-                      {project.github && (
+                      {project.github && typeof project.github === 'string' && (
                         <Button
                           type="primary"
                           icon={<GithubOutlined />}
@@ -270,6 +293,27 @@ const Projects = () => {
                         >
                           View Code
                         </Button>
+                      )}
+                      {project.github && typeof project.github === 'object' && (
+                        <>
+                          <Button
+                            type="primary"
+                            icon={<GithubOutlined />}
+                            href={project.github.frontend}
+                            target="_blank"
+                          >
+                            GitHub (Frontend)
+                          </Button>
+                          <Button
+                            type="primary"
+                            icon={<GithubOutlined />}
+                            href={project.github.backend}
+                            target="_blank"
+                            style={{ background: "#238636" }}
+                          >
+                            GitHub (Backend)
+                          </Button>
+                        </>
                       )}
                       {project.gitlab && (
                         <>
