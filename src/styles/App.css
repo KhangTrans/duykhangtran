@@ -4,37 +4,81 @@
   box-sizing: border-box;
 }
 
+:root {
+  --primary-color: #1890ff;
+  --secondary-color: #722ed1;
+  --success-color: #10b981;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 /* App Container */
 .app {
   min-height: 100vh;
-  transition: background-color 0.3s ease;
-}
-
-.app.dark-mode {
-  background: linear-gradient(135deg, #0a0e27 0%, #1a1d3a 100%);
-  color: #ffffff;
-}
-
-.app.light-mode {
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-  color: #000000;
-}
-
-/* Section Base Styles */
-.section {
-  padding: 80px 20px;
-  max-width: 1200px;
-  margin: 0 auto;
   position: relative;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+/* Dark Mode Theme */
+.app.dark-mode {
+  background-color: #090d1a;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(24, 144, 255, 0.08) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(114, 46, 209, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.04) 0px, transparent 50%);
+  color: #f1f5f9;
+}
+
+.app.dark-mode .ant-card {
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+}
+
+.app.dark-mode .ant-card-head {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+  color: #f1f5f9 !important;
+}
+
+.app.dark-mode .ant-card-head-title {
+  color: #f1f5f9 !important;
+}
+
+.app.dark-mode .ant-typography {
+  color: #f1f5f9 !important;
+}
+
+.app.dark-mode .ant-typography-secondary {
+  color: #94a3b8 !important;
+}
+
+/* Light Mode Theme */
+.app.light-mode {
+  background-color: #f8fafc;
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(24, 144, 255, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(114, 46, 209, 0.05) 0px, transparent 50%);
+  color: #0f172a;
+}
+
+.app.light-mode .ant-card {
+  background: #ffffff !important;
+  border-color: rgba(226, 232, 240, 0.8) !important;
+  box-shadow: 0 4px 16px rgba(15, 23, 42, 0.04) !important;
+  color: #0f172a !important;
+}
+
+.app.light-mode .ant-card-head {
+  border-bottom-color: #f1f5f9 !important;
 }
 
 /* Scroll Behavior */
@@ -44,31 +88,45 @@ html {
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(0, 0, 0, 0.05);
 }
 
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, #1890ff, #722ed1);
-  border-radius: 10px;
+  border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(180deg, #40a9ff, #9254de);
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
-  .section {
-    padding: 60px 15px;
-  }
+/* Modal styling */
+.ant-modal .ant-modal-content {
+  border-radius: 16px !important;
+  overflow: hidden !important;
 }
 
-@media (max-width: 480px) {
-  .section {
-    padding: 40px 10px;
+.app.dark-mode .ant-modal-content {
+  background: #0f172a !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #f1f5f9 !important;
+}
+
+.app.dark-mode .ant-modal-header {
+  background: transparent !important;
+}
+
+.app.dark-mode .ant-modal-title {
+  color: #f1f5f9 !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  section {
+    padding: 60px 16px !important;
   }
 }

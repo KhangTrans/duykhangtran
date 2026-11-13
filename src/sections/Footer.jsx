@@ -1,153 +1,195 @@
-import { Typography, Space } from "antd";
+import React from "react";
+import { Typography, Space, Tooltip } from "antd";
 import {
   GithubOutlined,
-  LinkedinOutlined,
   MailOutlined,
+  PhoneOutlined,
   HeartFilled,
+  ArrowUpOutlined,
 } from "@ant-design/icons";
 import styled from "styled-components";
 import { motion } from "framer-motion";
+import { useLanguage } from "../context/useLanguage";
 
 const { Text } = Typography;
 
 const FooterContainer = styled.footer`
   padding: 60px 20px 30px;
   text-align: center;
-  background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(10px);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  position: relative;
+  border-top: 1px solid rgba(24, 144, 255, 0.1);
+  background: rgba(0, 0, 0, 0.05);
+`;
+
+const FooterInner = styled.div`
+  max-width: 1000px;
+  margin: 0 auto;
+`;
+
+const BrandBlock = styled.div`
+  margin-bottom: 24px;
+
+  .footer-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #1890ff, #722ed1);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 8px;
+  }
+
+  .footer-desc {
+    max-width: 540px;
+    margin: 0 auto;
+    font-size: 0.95rem;
+    opacity: 0.75;
+    line-height: 1.6;
+  }
+`;
+
+const QuickLinks = styled.div`
+  margin: 24px 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 24px;
+`;
+
+const FooterLink = styled.a`
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  &:hover {
+    color: #1890ff;
+    opacity: 1;
+  }
 `;
 
 const SocialLinks = styled.div`
-  margin-bottom: 30px;
+  margin: 20px 0 28px;
 `;
 
 const SocialIcon = styled(motion.a)`
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
-  margin: 0 10px;
+  width: 44px;
+  height: 44px;
+  margin: 0 8px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #1890ff, #722ed1);
-  color: white;
-  font-size: 1.5rem;
+  background: rgba(24, 144, 255, 0.08);
+  border: 1px solid rgba(24, 144, 255, 0.15);
+  color: #1890ff;
+  font-size: 1.25rem;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: all 0.25s ease;
 
   &:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(24, 144, 255, 0.4);
-    color: white;
+    background: #1890ff;
+    color: #ffffff;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(24, 144, 255, 0.35);
   }
 `;
 
 const Copyright = styled.div`
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 24px;
+  border-top: 1px solid rgba(24, 144, 255, 0.08);
+  font-size: 0.86rem;
   opacity: 0.7;
 `;
 
-const QuickLinks = styled.div`
-  margin: 30px 0;
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 30px;
-`;
-
-const FooterLink = styled.a`
-  color: inherit;
-  text-decoration: none;
-  font-size: 1rem;
-  transition: color 0.3s ease;
-  cursor: pointer;
-
-  &:hover {
-    color: #1890ff;
-  }
-`;
-
 const Footer = () => {
-  const scrollToSection = (sectionId) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    } else {
+  const { t } = useLanguage();
+
+  const scrollTo = (id) => {
+    if (!id || id === "hero") {
       window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+    const el = document.getElementById(id);
+    if (el) {
+      const topOffset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
-  const socialLinks = [
-    {
-      icon: <GithubOutlined />,
-      url: "https://github.com/KhangTrans",
-      label: "GitHub",
-    },
-    {
-      icon: <MailOutlined />,
-      url: "mailto:trank7866@gmail.com",
-      label: "Email",
-    },
-  ];
-
-  const quickLinks = [
-    { label: "Home", id: null },
-    { label: "About", id: "about" },
-    { label: "Skills", id: "skills" },
-    { label: "Projects", id: "projects" },
-    { label: "Contact", id: "contact" },
+  const navLinks = [
+    { label: t.nav.home, id: "hero" },
+    { label: t.nav.about, id: "about" },
+    { label: t.nav.experience, id: "experience" },
+    { label: t.nav.skills, id: "skills" },
+    { label: t.nav.projects, id: "projects" },
+    { label: t.nav.contact, id: "contact" },
   ];
 
   return (
     <FooterContainer>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.6 }}
-      >
-        {/* Quick Links */}
+      <FooterInner>
+        <BrandBlock>
+          <div className="footer-name">Trần Duy Khang</div>
+          <p className="footer-desc">{t.footer.aboutText}</p>
+        </BrandBlock>
+
         <QuickLinks>
-          {quickLinks.map((link, index) => (
-            <FooterLink key={index} onClick={() => scrollToSection(link.id)}>
+          {navLinks.map((link, idx) => (
+            <FooterLink key={idx} onClick={() => scrollTo(link.id)}>
               {link.label}
             </FooterLink>
           ))}
         </QuickLinks>
 
-        {/* Social Links */}
         <SocialLinks>
-          <Space size="large">
-            {socialLinks.map((social, index) => (
-              <SocialIcon
-                key={index}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={social.label}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.95 }}
-              >
-                {social.icon}
-              </SocialIcon>
-            ))}
-          </Space>
+          <Tooltip title="GitHub: KhangTrans">
+            <SocialIcon
+              href="https://github.com/KhangTrans"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+              whileTap={{ scale: 0.95 }}
+            >
+              <GithubOutlined />
+            </SocialIcon>
+          </Tooltip>
+
+          <Tooltip title="Email: trank7866@gmail.com">
+            <SocialIcon
+              href="mailto:trank7866@gmail.com"
+              aria-label="Email"
+              whileTap={{ scale: 0.95 }}
+            >
+              <MailOutlined />
+            </SocialIcon>
+          </Tooltip>
+
+          <Tooltip title="Phone: 0344 539 514">
+            <SocialIcon
+              href="tel:0344539514"
+              aria-label="Phone"
+              whileTap={{ scale: 0.95 }}
+            >
+              <PhoneOutlined />
+            </SocialIcon>
+          </Tooltip>
         </SocialLinks>
 
-        {/* Copyright */}
         <Copyright>
-          <Text>
-            Made by <strong>TRAN DUY KHANG</strong>
-          </Text>
-          <br />
-          <Text style={{ fontSize: "0.9rem" }}>
-            © {new Date().getFullYear()} All rights reserved.
-          </Text>
+          <p style={{ margin: "0 0 6px 0" }}>{t.footer.copyright}</p>
+          <p style={{ margin: 0, fontSize: "0.8rem" }}>
+            © {new Date().getFullYear()} Tran Duy Khang • Can Tho, Vietnam
+          </p>
         </Copyright>
-      </motion.div>
+      </FooterInner>
     </FooterContainer>
   );
 };

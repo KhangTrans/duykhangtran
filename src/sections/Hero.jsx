@@ -1,62 +1,74 @@
-import { Button, Space, Row, Col } from "antd";
-import { DownOutlined, MailOutlined, GithubOutlined } from "@ant-design/icons";
+import React from "react";
+import { Button, Space, Row, Col, Tooltip } from "antd";
+import {
+  DownOutlined,
+  MailOutlined,
+  GithubOutlined,
+  FilePdfOutlined,
+  PhoneOutlined,
+  SendOutlined,
+  CheckCircleFilled,
+} from "@ant-design/icons";
+import {
+  SiReact,
+  SiNextdotjs,
+  SiTypescript,
+  SiNodedotjs,
+  SiPostgresql,
+} from "react-icons/si";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 import profileImage from "../assets/khang.jpg";
+import { useLanguage } from "../context/useLanguage";
 
-const HeroContainer = styled.div`
+const HeroContainer = styled.section`
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 20px;
-  padding-bottom: 80px;
+  padding: 120px 24px 60px;
   position: relative;
   overflow: hidden;
   width: 100%;
 
-  /* Animated Background Elements */
+  /* Background Ambient Glows */
   &::before {
+    content: "";
+    position: absolute;
+    width: 550px;
+    height: 550px;
+    background: radial-gradient(
+      circle,
+      rgba(24, 144, 255, 0.15) 0%,
+      rgba(114, 46, 209, 0.05) 50%,
+      transparent 70%
+    );
+    border-radius: 50%;
+    top: -150px;
+    right: -100px;
+    filter: blur(40px);
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  &::after {
     content: "";
     position: absolute;
     width: 500px;
     height: 500px;
     background: radial-gradient(
       circle,
-      rgba(24, 144, 255, 0.1) 0%,
+      rgba(114, 46, 209, 0.12) 0%,
+      rgba(24, 144, 255, 0.04) 50%,
       transparent 70%
     );
     border-radius: 50%;
-    top: -250px;
-    right: -250px;
-    animation: float 6s ease-in-out infinite;
-  }
-
-  &::after {
-    content: "";
-    position: absolute;
-    width: 400px;
-    height: 400px;
-    background: radial-gradient(
-      circle,
-      rgba(114, 46, 209, 0.1) 0%,
-      transparent 70%
-    );
-    border-radius: 50%;
-    bottom: -200px;
-    left: -200px;
-    animation: float 8s ease-in-out infinite reverse;
-  }
-
-  @keyframes float {
-    0%,
-    100% {
-      transform: translateY(0) rotate(0deg);
-    }
-    50% {
-      transform: translateY(-20px) rotate(5deg);
-    }
+    bottom: -100px;
+    left: -100px;
+    filter: blur(40px);
+    z-index: 0;
+    pointer-events: none;
   }
 `;
 
@@ -67,52 +79,84 @@ const HeroContent = styled.div`
   width: 100%;
 `;
 
-const ProfileImageContainer = styled(motion.div)`
+const ImageColWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 30px;
   position: relative;
-  padding: 30px 0;
+`;
 
-  @media (min-width: 768px) {
-    margin-bottom: 0;
+const ProfileFrame = styled(motion.div)`
+  position: relative;
+  width: 320px;
+  height: 320px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 20px;
   }
 `;
 
-const ProfileImage = styled.img`
-  width: 300px;
-  height: 300px;
+const ProfileGlow = styled.div`
+  position: absolute;
+  inset: -10px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #1890ff, #722ed1, #10b981);
+  opacity: 0.7;
+  filter: blur(18px);
+  animation: spinGlow 10s linear infinite;
+
+  @keyframes spinGlow {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+`;
+
+const ProfileImg = styled.img`
+  position: relative;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
   object-fit: cover;
-  border: 5px solid transparent;
-  background: linear-gradient(white, white) padding-box,
-    linear-gradient(135deg, #1890ff, #722ed1) border-box;
-  box-shadow: 0 20px 60px rgba(24, 144, 255, 0.3);
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: gentle-float 4s ease-in-out infinite;
-  position: relative;
-
-  @keyframes gentle-float {
-    0%,
-    100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-15px);
-    }
-  }
+  border: 4px solid rgba(255, 255, 255, 0.85);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  z-index: 2;
+  background: #111;
+  transition: transform 0.4s ease;
 
   &:hover {
-    transform: translateY(-20px) scale(1.05);
-    box-shadow: 0 30px 80px rgba(24, 144, 255, 0.5),
-      0 0 50px rgba(114, 46, 209, 0.3);
-    filter: brightness(1.1);
+    transform: scale(1.03);
   }
+`;
+
+const FloatingTechBadge = styled(motion.div)`
+  position: absolute;
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  z-index: 3;
+  color: ${(props) => props.color || "#1890ff"};
 
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
+    width: 40px;
+    height: 40px;
+    font-size: 1.3rem;
   }
 `;
 
@@ -124,258 +168,372 @@ const TextContent = styled.div`
   }
 `;
 
-const Greeting = styled(motion.p)`
-  font-size: 1.2rem;
-  margin-bottom: 10px;
-  color: #1890ff;
+const StatusPill = styled(motion.div)`
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  border-radius: 30px;
+  background: rgba(16, 185, 129, 0.12);
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  color: #10b981;
+  font-size: 0.86rem;
+  font-weight: 600;
+  margin-bottom: 18px;
+
+  .pulse {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 10px #10b981;
+    animation: pulseAnim 2s infinite;
+  }
+
+  @keyframes pulseAnim {
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 0.4;
+      transform: scale(0.85);
+    }
+  }
+`;
+
+const Greeting = styled(motion.div)`
+  font-size: 1.25rem;
   font-weight: 500;
+  color: #1890ff;
+  margin-bottom: 8px;
 `;
 
 const Name = styled(motion.h1)`
-  font-size: 4rem;
-  margin-bottom: 20px;
-  background: linear-gradient(135deg, #1890ff, #722ed1);
+  font-size: 3.8rem;
+  line-height: 1.1;
+  margin-bottom: 14px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #1890ff 0%, #722ed1 60%, #a855f7 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-weight: 700;
 
   @media (max-width: 768px) {
-    font-size: 3rem;
+    font-size: 2.8rem;
   }
 
   @media (max-width: 480px) {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
 `;
 
-const Title = styled(motion.h2)`
-  font-size: 1.8rem;
-  margin-bottom: 30px;
-  opacity: 0.9;
+const Subtitle = styled(motion.h2)`
+  font-size: 1.6rem;
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1.35;
+  opacity: 0.92;
 
   @media (max-width: 768px) {
-    font-size: 1.5rem;
-  }
-
-  @media (max-width: 480px) {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 `;
 
 const Description = styled(motion.p)`
-  font-size: 1.1rem;
+  font-size: 1.08rem;
   line-height: 1.8;
+  margin-bottom: 32px;
+  opacity: 0.85;
+  max-width: 620px;
+
+  @media (max-width: 768px) {
+    margin: 0 auto 30px auto;
+  }
+`;
+
+const ButtonGroup = styled(motion.div)`
   margin-bottom: 40px;
-  opacity: 0.8;
+
+  .ant-space {
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  .btn-hero {
+    height: 48px;
+    padding: 0 26px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 10px;
+  }
+`;
+
+const StatsGrid = styled(motion.div)`
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 15px;
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
   @media (max-width: 480px) {
-    font-size: 1rem;
+    grid-template-columns: 1fr;
+  }
+`;
+
+const StatCard = styled.div`
+  padding: 16px 18px;
+  background: rgba(24, 144, 255, 0.04);
+  border: 1px solid rgba(24, 144, 255, 0.12);
+  border-radius: 12px;
+  transition: all 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    background: rgba(24, 144, 255, 0.08);
+    border-color: #1890ff;
+  }
+
+  .stat-num {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #1890ff;
+    margin-bottom: 2px;
+  }
+
+  .stat-sub {
+    font-size: 0.82rem;
+    opacity: 0.75;
+    line-height: 1.35;
   }
 `;
 
 const ScrollIndicator = styled(motion.div)`
-  position: absolute;
-  bottom: 30px;
-  left: 0;
-  right: 0;
   cursor: pointer;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  opacity: 0.6;
+  gap: 8px;
+  opacity: 0.7;
+  margin-top: 40px;
   transition: opacity 0.3s;
-  z-index: 10;
 
   &:hover {
     opacity: 1;
   }
 
   span {
-    font-size: 0.9rem;
-    text-align: center;
-    white-space: nowrap;
-  }
-
-  @media (max-width: 768px) {
-    bottom: 20px;
-
-    span {
-      font-size: 0.85rem;
-    }
-
-    svg {
-      font-size: 1.2rem;
-    }
-  }
-
-  @media (max-width: 480px) {
-    bottom: 15px;
-
-    span {
-      font-size: 0.8rem;
-    }
-  }
-`;
-
-const ButtonContainer = styled(motion.div)`
-  margin-bottom: 60px;
-
-  @media (max-width: 768px) {
-    margin-bottom: 50px;
-    width: 100%;
-
-    .ant-space {
-      width: 100%;
-      display: flex !important;
-      flex-direction: column !important;
-      align-items: center !important;
-      gap: 16px !important;
-    }
-
-    .ant-btn {
-      height: 48px !important;
-      font-size: 1rem !important;
-      padding: 0 24px !important;
-      width: 100% !important;
-      max-width: 280px !important;
-    }
-  }
-
-  @media (max-width: 480px) {
-    margin-bottom: 40px;
-
-    .ant-btn {
-      height: 45px !important;
-      font-size: 0.95rem !important;
-      max-width: 260px !important;
-    }
+    font-size: 0.85rem;
+    font-weight: 500;
   }
 `;
 
 const Hero = () => {
-  const scrollToProjects = () => {
-    const projectsSection = document.getElementById("projects");
-    if (projectsSection) {
-      projectsSection.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+  const { t } = useLanguage();
 
-  const scrollToContact = () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: "smooth" });
+  const scrollToSection = (id) => {
+    const el = document.getElementById(id);
+    if (el) {
+      const topOffset = 80;
+      const elementPosition = el.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - topOffset;
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: "smooth",
+      });
     }
   };
 
   return (
-    <HeroContainer>
+    <HeroContainer id="hero">
       <HeroContent>
         <Row gutter={[48, 48]} align="middle">
-          {/* Profile Image - Left Side */}
+          {/* Left Column: Profile Photo + Floating Tech Badges */}
           <Col xs={24} md={10}>
-            <ProfileImageContainer
-              initial={{ opacity: 0, x: -50 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <ProfileImage
-                src={profileImage}
-                alt="TRAN DUY KHANG"
-                onError={(e) => {
-                  // Fallback to a gradient background if image doesn't load
-                  e.target.style.background =
-                    "linear-gradient(135deg, #1890ff, #722ed1)";
-                  e.target.style.border = "none";
-                }}
-              />
-            </ProfileImageContainer>
+            <ImageColWrapper>
+              <ProfileFrame
+                initial={{ opacity: 0, scale: 0.85 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.8 }}
+              >
+                <ProfileGlow />
+                <ProfileImg
+                  src={profileImage}
+                  alt="Trần Duy Khang"
+                  onError={(e) => {
+                    e.target.style.background =
+                      "linear-gradient(135deg, #1890ff, #722ed1)";
+                  }}
+                />
+
+                {/* Floating Tech Badges */}
+                <FloatingTechBadge
+                  color="#61dafb"
+                  style={{ top: "0%", left: "5%" }}
+                  animate={{ y: [0, -10, 0] }}
+                  transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                >
+                  <SiReact />
+                </FloatingTechBadge>
+
+                <FloatingTechBadge
+                  color="#000000"
+                  style={{ top: "15%", right: "-5%" }}
+                  animate={{ y: [0, 10, 0] }}
+                  transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                >
+                  <SiNextdotjs />
+                </FloatingTechBadge>
+
+                <FloatingTechBadge
+                  color="#3178c6"
+                  style={{ bottom: "8%", left: "0%" }}
+                  animate={{ y: [0, 8, 0] }}
+                  transition={{ duration: 3.8, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                >
+                  <SiTypescript />
+                </FloatingTechBadge>
+
+                <FloatingTechBadge
+                  color="#339933"
+                  style={{ bottom: "2%", right: "8%" }}
+                  animate={{ y: [0, -8, 0] }}
+                  transition={{ duration: 4.2, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                >
+                  <SiNodedotjs />
+                </FloatingTechBadge>
+              </ProfileFrame>
+            </ImageColWrapper>
           </Col>
 
-          {/* Text Content - Right Side */}
+          {/* Right Column: Text & Badges & Actions */}
           <Col xs={24} md={14}>
             <TextContent>
-              <Greeting
-                initial={{ opacity: 0, y: -20 }}
+              <StatusPill
+                initial={{ opacity: 0, y: -15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                👋 Hello, I'm
+                <span className="pulse" />
+                <span>{t.hero.badge}</span>
+              </StatusPill>
+
+              <Greeting
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                {t.hero.greeting}
               </Greeting>
 
               <Name
-                initial={{ opacity: 0, scale: 0.8 }}
+                initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
+                transition={{ duration: 0.7, delay: 0.2 }}
               >
-                TRAN DUY KHANG
+                {t.hero.name}
               </Name>
 
-              <Title
-                initial={{ opacity: 0, y: 20 }}
+              <Subtitle
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.4 }}
+                transition={{ duration: 0.7, delay: 0.3 }}
               >
-                Software Engineering Student | Frontend Developer
-              </Title>
+                {t.hero.title}
+              </Subtitle>
 
               <Description
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.6 }}
+                transition={{ duration: 0.7, delay: 0.4 }}
               >
-                Passionate about creating beautiful, functional web
-                applications. Currently studying at FPT University, Cần Thơ
-                Campus, and building modern solutions with React, Node.js, and
-                cutting-edge technologies.
+                {t.hero.description}
               </Description>
 
-              <ButtonContainer
+              <ButtonGroup
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.8 }}
+                transition={{ duration: 0.7, delay: 0.5 }}
               >
-                <Space size="large" wrap style={{ justifyContent: "center" }}>
+                <Space size="middle" wrap>
                   <Button
                     type="primary"
-                    size="large"
-                    icon={<GithubOutlined />}
-                    onClick={scrollToProjects}
+                    className="btn-hero"
+                    icon={<SendOutlined />}
+                    onClick={() => scrollToSection("projects")}
                     style={{
-                      height: "50px",
-                      fontSize: "1.1rem",
-                      padding: "0 30px",
+                      boxShadow: "0 6px 20px rgba(24, 144, 255, 0.4)",
                     }}
                   >
-                    View Projects
+                    {t.hero.viewProjects}
                   </Button>
+
                   <Button
-                    size="large"
+                    className="btn-hero"
                     icon={<MailOutlined />}
-                    onClick={scrollToContact}
+                    onClick={() => scrollToSection("contact")}
+                  >
+                    {t.hero.contactMe}
+                  </Button>
+
+                  <Button
+                    className="btn-hero"
+                    icon={<FilePdfOutlined />}
+                    href="/Tran-Duy-Khang-CV.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
                     style={{
-                      height: "50px",
-                      fontSize: "1.1rem",
-                      padding: "0 30px",
+                      borderColor: "#722ed1",
+                      color: "#722ed1",
                     }}
                   >
-                    Contact Me
+                    {t.hero.downloadCv}
                   </Button>
                 </Space>
-              </ButtonContainer>
+              </ButtonGroup>
+
+              {/* Quick Stats Grid */}
+              <StatsGrid
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.6 }}
+              >
+                <StatCard>
+                  <div className="stat-num">{t.hero.statGpa}</div>
+                  <div className="stat-sub">{t.hero.statGpaSub}</div>
+                </StatCard>
+                <StatCard>
+                  <div className="stat-num">{t.hero.statExp}</div>
+                  <div className="stat-sub">{t.hero.statExpSub}</div>
+                </StatCard>
+                <StatCard>
+                  <div className="stat-num">{t.hero.statLead}</div>
+                  <div className="stat-sub">{t.hero.statLeadSub}</div>
+                </StatCard>
+                <StatCard>
+                  <div className="stat-num">{t.hero.statTech}</div>
+                  <div className="stat-sub">{t.hero.statTechSub}</div>
+                </StatCard>
+              </StatsGrid>
             </TextContent>
           </Col>
         </Row>
       </HeroContent>
 
       <ScrollIndicator
-        animate={{ y: [0, 10, 0] }}
-        transition={{ duration: 1.5, repeat: Infinity }}
+        onClick={() => scrollToSection("about")}
+        animate={{ y: [0, 8, 0] }}
+        transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
       >
-        <span>Scroll Down</span>
-        <DownOutlined style={{ fontSize: "1.5rem" }} />
+        <span>{t.hero.scrollDown}</span>
+        <DownOutlined style={{ fontSize: "1.2rem", color: "#1890ff" }} />
       </ScrollIndicator>
     </HeroContainer>
   );

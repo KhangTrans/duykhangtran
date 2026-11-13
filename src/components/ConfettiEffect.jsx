@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const fall = keyframes`
   0% {
@@ -38,9 +38,7 @@ const Confetti = styled.div`
 `;
 
 const ConfettiEffect = () => {
-  const [confettis, setConfettis] = useState([]);
-
-  useEffect(() => {
+  const [confettis] = useState(() => {
     const colors = [
       "#ff6b6b",
       "#ffd700",
@@ -51,7 +49,7 @@ const ConfettiEffect = () => {
       "#ff3366",
     ];
 
-    const confettiArray = Array.from({ length: 50 }, (_, i) => ({
+    return Array.from({ length: 50 }, (_, i) => ({
       id: i,
       size: Math.random() * 10 + 5, // 5-15px
       color: colors[Math.floor(Math.random() * colors.length)],
@@ -60,9 +58,7 @@ const ConfettiEffect = () => {
       left: Math.random() * 100, // 0-100%
       shape: Math.random() > 0.5 ? "circle" : "square",
     }));
-
-    setConfettis(confettiArray);
-  }, []);
+  });
 
   return (
     <Container>

@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const explode = keyframes`
   0% {
@@ -72,10 +72,7 @@ const Sparkle = styled.div`
 `;
 
 const Fireworks = () => {
-  const [particles, setParticles] = useState([]);
-  const [sparkles, setSparkles] = useState([]);
-
-  useEffect(() => {
+  const [particles] = useState(() => {
     const colors = [
       "#ff3366",
       "#ffcc00",
@@ -85,7 +82,6 @@ const Fireworks = () => {
       "#00ffff",
     ];
 
-    // Create particles for two firework launchers (left and right)
     const particleArray = [];
 
     // Left firework
@@ -118,9 +114,10 @@ const Fireworks = () => {
       });
     }
 
-    setParticles(particleArray);
+    return particleArray;
+  });
 
-    // Create sparkles
+  const [sparkles] = useState(() => {
     const sparkleArray = [];
     for (let i = 0; i < 10; i++) {
       sparkleArray.push({
@@ -131,8 +128,8 @@ const Fireworks = () => {
         delay: Math.random() * 2,
       });
     }
-    setSparkles(sparkleArray);
-  }, []);
+    return sparkleArray;
+  });
 
   return (
     <FireworksContainer>

@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const float = keyframes`
   0% {
@@ -40,11 +40,8 @@ const Flower = styled.div`
 `;
 
 const TetFlowers = () => {
-  const [flowers, setFlowers] = useState([]);
-
-  useEffect(() => {
-    // Create 20 particles with random properties
-    const flowerArray = Array.from({ length: 20 }, (_, i) => ({
+  const [flowers] = useState(() => {
+    return Array.from({ length: 20 }, (_, i) => ({
       id: i,
       emoji: ["⚛️", "💻", "🚀", "⚡", "🔥", "🌐", "🎨", "💡", "📱", "🛠️"][
         Math.floor(Math.random() * 10)
@@ -54,8 +51,7 @@ const TetFlowers = () => {
       delay: Math.random() * 10, // 0-10s
       left: Math.random() * 100, // 0-100%
     }));
-    setFlowers(flowerArray);
-  }, []);
+  });
 
   return (
     <FloatingContainer>
